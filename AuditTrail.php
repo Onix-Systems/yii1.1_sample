@@ -55,8 +55,6 @@ class AuditTrail extends CActiveRecord
             array('field', 'length', 'max' => 255),
             array('model_id', 'length', 'max' => 255),
             array('user_id', 'length', 'max' => 255),
-            // The following rule is used by search().
-            // Please remove those attributes that should not be searched.
             array('id, new_value, old_value, action, model, field, stamp, user_id, model_id', 'safe', 'on' => 'search'),
         );
     }
@@ -68,8 +66,6 @@ class AuditTrail extends CActiveRecord
      */
     public function relations()
     {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
         return array(
             'user' => array(self::BELONGS_TO, 'User', 'user_id'),
         );
@@ -113,8 +109,6 @@ class AuditTrail extends CActiveRecord
      */
     public function search()
     {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
         $criteria = new CDbCriteria;
         $criteria->compare('id', $this->id);
         $criteria->compare('old_value', $this->old_value, true);
@@ -134,19 +128,6 @@ class AuditTrail extends CActiveRecord
                     'pageSize' => Yii::app()->params['defaultPageSize'],
                 ),
             )
-        );
-    }
-
-    /**
-     * Behaviors.
-     *
-     * @return array
-     */
-    public function behaviors()
-    {
-        return array(/*	'ESaveGreedViewState' => array(
-				'class' => 'common.modules.YOnixCommon.behaviors.ESaveGridViewState.ESaveGridViewState',
-			),*/
         );
     }
 }
